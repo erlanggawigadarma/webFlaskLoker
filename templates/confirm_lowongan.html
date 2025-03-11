@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Konfirmasi Lowongan{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Konfirmasi Lowongan</h2>
+    {% if jobs %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ job['title'] }}</td>
+                        <td>
+                            <!-- Tombol Lihat Detail -->
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal{{ job['id'] }}">Lihat Detail</button>
+
+                            <!-- Form Konfirmasi -->
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="lowongan_id" value="{{ job['id'] }}">
+                                <button type="submit" name="action" value="approve" class="btn btn-success">Konfirmasi</button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger">Tolak</button>
+                                <button type="submit" name="action" value="delete" class="btn btn-secondary">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- Modal Detail -->
+                    <div class="modal fade" id="detailModal{{ job['id'] }}" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ job['title'] }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Deskripsi:</strong> {{ job['description'] }}</p>
+                                    <p><strong>Gaji:</strong> {{ job['gaji'] or 'Tidak disebutkan' }}</p>
+                                    <p><strong>Alamat Perusahaan:</strong> {{ job['company_address'] }}</p>
+                                    <p><strong>Kategori:</strong> {{job['kategori']}}</p>
+                                    {% if job['logo'] %}
+                                        <p><strong>Logo:</strong></p>
+                                        <img src="{{ url_for('static', filename='uploads/' + job['logo']) }}" alt="Logo Perusahaan" class="img-fluid">
+                                    {% endif %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Akhir Modal Detail -->
+
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Tidak ada lowongan yang perlu dikonfirmasi.</p>
+    {% endif %}
+</div>
+{% endblock %}

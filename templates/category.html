@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4">Lowongan di Kategori: {{ category }}</h3>
+    <div class="row">
+        {% for job in jobs %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow border rounded">
+                    <div class="p card-body">
+                        <h5 class="card-title">
+                            <a href="{{ url_for('job_detail', job_id=job['id']) }}" class="text-decoration-none text-dark">
+                                {{ job['title'] }}
+                            </a>
+                        </h5>
+                        <p class="card-text">Alamat: {{ job['company_address'] }}</p>
+                        <p class="card-text text-muted mb-1">
+                            {{ job['description'][:100] }}{% if job['description']|length > 100 %}...{% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

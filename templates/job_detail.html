@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail Lowongan{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="content-container mt-5">
+        <div class="d-flex align-items-start">
+            {% if job[5] %}
+            <img src="{{ url_for('static', filename='uploads/' + job[5]) }}"
+                 alt="Logo Perusahaan"
+                 width="100" height="100"
+                 class="me-4 img-fluid rounded">
+            {% endif %}
+
+            <div>
+                <h1 class="mb-3">{{ job[1] }}</h1>
+                <h4>{{ job['name'] }}</h4>
+
+                <p>
+                <ul>
+                    {% for item in job['description'].splitlines() if item.strip() %}
+                        <li>{{ item.strip() }}</li>
+                    {% endfor %}
+                </ul>
+                </p>
+
+                <p><strong>Kategori:</strong> {{ job['kategori'] }}</p>
+                <p class="bi bi-pin-map-fill"> {{ job[4] }}</p>
+                <p><strong>Gaji:</strong> {{ job['gaji'] if job['gaji'] else 'Tidak disebutkan' }}</p>
+
+                <p><strong>Persyaratan:</strong>
+                <ol>
+                    {% for item in (job['syarat'] or '').splitlines() if item.strip() %}
+                        <li>{{ item.strip() }}</li>
+                    {% endfor %}
+                </ol>
+                </p>
+            </div>
+        </div>
+
+        <a href="{{ url_for('home_page') }}" class="btn btn-secondary mt-3">Kembali</a>
+    </div>
+
+    <!-- Komentar dipisah agar bisa diatur dengan CSS -->
+    <div class="komentar-container">
+        {% if session.get('user_id') %}
+            <h3>Komentar</h3>
+            <form action="{{ url_for('add_comment') }}" method="POST">
+                <input type="hidden" name="job_id" value="{{ job[0] }}">
+                <textarea name="comment" class="form-control mb-2" placeholder="Tulis Komentar..." required></textarea>
+                <button type="submit" class="btn btn-primary">Kirim</button>
+            </form>
+
+            <h4 class="mt-4">Komentar</h4>
+            <ul class="list-group mt-3">
+                {% for comment in comments %}
+                <li class="list-group-item">
+                    <strong>{{ comment['first_name'] }}:</strong> {{ comment['comment'] }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="mt-3">Silahkan <a href="{{ url_for('login') }}">Login</a> untuk memberikan komentar</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

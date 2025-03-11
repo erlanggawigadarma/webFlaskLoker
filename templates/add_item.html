@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Lowongan{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Tambah Lowongan Baru</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Judul Lowongan</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nama Perusahaan</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Deskripsi (Enter menjadikan list)</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+
+        <div class="mb-3">
+             <label for="kategori" class="form-label">Kategori</label>
+                <select id="kategori" name="kategori" class="form-control" required>
+                    <option value="Sains & Teknologi">Sains & Teknologi</option>
+                    <option value="Teknologi Informasi & Komunikasi">Teknologi Informasi & Komunikasi</option>
+                    <option value="Penjualan">Penjualan</option>
+                    <option value="Call Center & Layanan Konsumen">Call Center & Layanan Konsumen</option>
+                    <option value="Kesehatan">Kesehatan</option>
+                    <option value="Hospitaliti & Pariwisata">Hospitaliti & Pariwisata</option>
+                    <option value="Lainnya">Lainnya</option>
+                 </select>
+        </div>
+
+
+        <div class="mb-3">
+             <label for="gaji_range" class="form-label">Gaji</label>
+                <select id="gaji_range" name="gaji" class="form-control" required>
+                    <option value="500.000-1.000.000">500.000-1.000.000</option>
+                    <option value="1.000.000-2.000.000">1.000.000-2.000.000</option>
+                    <option value="2.000.000-3.000.000">2.000.000-3.000.000</option>
+                    <option value="3.000.000-4.000.000">3.000.000-4.000.000</option>
+                    <option value="4.000.000-5.000.000">4.000.000-5.000.000</option>
+                    <option value="5.000.000-7.000.000">5.000.000-7.000.000</option>
+                    <option value="7.000.000-8.000.000">7.000.000-8.000.000</option>
+                    <option value="8.000.000-10.000.000">8.000.000-10.000.000</option>
+                    <option value="10.000.000-15.000.000">10.000.000-15.000.000</option>
+                    <option value="Lainnya">Lainya</option>
+                 </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="company_address" class="form-label">Alamat Perusahaan</label>
+            <input type="text" class="form-control" id="company_address" name="company_address" required>
+            {# Input teks untuk alamat perusahaan, wajib diisi #}
+        </div>
+
+        <div class="mb-3">
+            <label for="syarat" class="from-label">Persyaratan (Enter menjadikan list)</label>
+            <textarea class="form-control" id="syarat" name="syarat" required></textarea>
+
+        </div>
+
+        <div class="mb-3">
+            <label for="logo" class="form-label">Logo Perusahaan</label>
+            <input type="file" class="form-control" id="logo" name="logo">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tambahkan</button>
+
+    </form>
+</div>
+{% endblock %}

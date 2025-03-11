@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Daftar Lowongan
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Daftar Lowongan</h2>
+
+    {% if jobs %}
+        <table class="table table-hover table-light">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Judul</th>
+                    <th scope="col">Deskripsi</th>
+                    <th scope="col">Alamat Perusahaan</th>
+                    <th scope="col">Opsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ job['title'] }}</td>
+                        <td>
+                            {{ job['description'][:100] }}{% if job['description']|length > 100 %}...{% endif %}
+                            {# Menampilkan deskripsi singkat dengan batas 100 karakter #}
+                        </td>
+                        <td>{{ job['company_address'] }}</td>
+                        <td>
+                            {% if session['role'] == 'admin' %}  {# Menampilkan tombol hapus hanya jika user adalah admin #}
+                                <form method="POST" action="{{ url_for('delete_lowongan_route') }}" style="display:inline;">
+                                    <input type="hidden" name="lowongan_id" value="{{ job['id'] }}">
+                                    <button type="submit" class="btn btn-outline btn-danger"
+                                            onclick="return confirm('Yakin ingin menghapus lowongan ini?')">
+                                        Delete
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Tombol More Info -->
+                            <a href="{{ url_for('job_detail', job_id=job['id']) }}" class="btn btn-outline btn-info">
+                                More Info
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-light">Belum ada lowongan yang tersedia.</p>
+
+    {% endif %}
+</div>
+{% endblock %}
