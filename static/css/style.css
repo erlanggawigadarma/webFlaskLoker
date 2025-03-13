@@ -176,4 +176,13 @@ body {
     z-index: 1;
 }
 
+button, input {
+    pointer-events: auto !important;
+    z-index: 100 !important;
+}
+
+.small a {
+    position: relative;
+    z-index: 10;
+}
 
